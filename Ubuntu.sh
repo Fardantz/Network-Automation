@@ -2,6 +2,11 @@
 
 # Langkah 1: Pembaruan dan Peningkatan Sistem
 echo "Memperbarui dan meningkatkan sistem..."
+"deb http://kartolo.sby.datautama.net.id/ubuntu/ focal main restricted universe multiverse"
+"deb http://kartolo.sby.datautama.net.id/ubuntu/ focal-updates main restricted universe multiverse"
+"deb http://kartolo.sby.datautama.net.id/ubuntu/ focal-security main restricted universe multiverse"
+"deb http://kartolo.sby.datautama.net.id/ubuntu/ focal-backports main restricted universe multiverse"
+"deb http://kartolo.sby.datautama.net.id/ubuntu/ focal-proposed main restricted universe multiverse"
 sudo apt update && sudo apt upgrade -y
 
 # Langkah 2: Instalasi Paket-Paket Diperlukan
@@ -30,7 +35,7 @@ network:
       id: 10
       link: eth1
       addresses:
-        - 192.168.A.1/24
+        - 192.168.20.1/24
 EOF
 sudo netplan apply
 
@@ -40,9 +45,9 @@ sudo tee /etc/dhcp/dhcpd.conf << EOF
 default-lease-time 600;
 max-lease-time 7200;
 
-subnet 192.168.A.0 netmask 255.255.255.0 {
-  range 192.168.A.10 192.168.A.100;
-  option routers 192.168.A.1;
+subnet 192.168.20.0 netmask 255.255.255.0 {
+  range 192.168.20.10 192.168.20.100;
+  option routers 192.168.20.1;
   option subnet-mask 255.255.255.0;
   option domain-name-servers 8.8.8.8, 8.8.4.4;
 }

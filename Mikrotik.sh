@@ -1,38 +1,53 @@
-# Buat VLAN 10 dan 20 pada interface ether1
-/interface vlan
-add name=vlan10 vlan-id=10 interface=ether1
-add name=vlan20 vlan-id=20 interface=ether1
+#!/bin/bash
 
-# Assign IP address ke VLAN
-/ip address
-add address=192.168.3.1/24 interface=vlan10
-add address=192.168.20.1/24 interface=vlan20
+apt install expect -y
+apt install telnet 
 
-# Konfigurasi DHCP Server untuk VLAN 10
-/ip pool
-add name=dhcp_pool_vlan10 ranges=192.168.3.10-192.168.3.100
-/ip dhcp-server
-add name=dhcp_vlan10 interface=vlan10 address-pool=dhcp_pool_vlan10
-/ip dhcp-server network
-add address=192.168.3.0/24 gateway=192.168.3.1 dns-server=8.8.8.8,8.8.4.4
+MIKROTIK_USER="admin"
+MIKROTIK_PASS="123"
+MIKROTIK_IP="192.168.3.10"
 
-# Konfigurasi DHCP Server untuk VLAN 20
-/ip pool
-add name=dhcp_pool_vlan20 ranges=192.168.20.10-192.168.20.100
-/ip dhcp-server
-add name=dhcp_vlan20 interface=vlan20 address-pool=dhcp_pool_vlan20
-/ip dhcp-server network
-add address=192.168.20.0/24 gateway=192.168.20.1 dns-server=8.8.8.8,8.8.4.4
+expect << EOF
+spawn telnet $MIKROTIK_IP
+expect "login:"
+send "$MIKROTIK_USER\r"
+expect "Password:"
+send "$MIKROTIK_PASS\r"
+expect ">"
 
-# Aktifkan IP forwarding
-/ip settings set forward=yes
+# Menambahkan DHCP Client di ether1
+send "/interface dhcp-client add interface=ether1 disabled=no\r"
+expect ">"
 
-# Konfigurasi NAT
-/ip firewall nat
-add chain=srcnat out-interface=ether1 action=masquerade
+# Menambahkan IP address di ether2
+send "/ip address add address=192.168.200.1/24 interface=ether2\r"
+expect ">"
 
-# Simpan konfigurasi
-/system backup save name=backup
+# Membuat IP pool
+send "/ip pool add name=dhcp_pool ranges=192.168.200.10-192.168.200.100\r"
+expect ">"
 
-# Selesai
-:log info "Konfigurasi VLAN dan DHCP selesai."
+# Menambahkan DHCP Server
+send "/ip dhcp-server add name=dhcp1 interface=ether2 address-pool=dhcp_pool disabled=no\r"
+expect ">"
+
+# Menambahkan konfigurasi network DHCP Server
+send "/ip dhcp-server network add address=192.168.200.0/24 gateway=192.168.200.1\r"
+expect ">"
+# Menambahkan konfigurasi network DHCP Server
+send "/ip dhcp-server enable dhcp1"
+expect ">"
+
+# Menambahkan static route ke Ubuntu Server
+send "/ip route add gateway=192.168.3.1\r"
+expect ">"
+
+# Menambahkan aturan firewall NAT untuk internet sharing
+send "/ip firewall nat add chain=srcnat out-interface=ether1 action=masquerade\r"
+expect ">"
+
+
+# Keluar dari MikroTik
+send "exit\r"
+expect eof
+EOF

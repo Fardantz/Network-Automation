@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Langkah 1: Pembaruan dan Peningkatan Sistem
+# Langkah 1: Pembaruan Repo (Kartolo)
 echo "Memperbarui dan meningkatkan sistem..."
 "deb http://kartolo.sby.datautama.net.id/ubuntu/ focal main restricted universe multiverse"
 "deb http://kartolo.sby.datautama.net.id/ubuntu/ focal-updates main restricted universe multiverse"

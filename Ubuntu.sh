@@ -1,5 +1,7 @@
 #!/bin/bash
 
+FARDANTZ AUTOMATION.
+
 # Langkah 1: Pembaruan Repo (Kartolo)
 echo "Memperbarui dan meningkatkan sistem..."
 "deb http://kartolo.sby.datautama.net.id/ubuntu/ focal main restricted universe multiverse"

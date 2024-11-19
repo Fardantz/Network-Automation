@@ -37,7 +37,7 @@ network:
       id: 10
       link: eth1
       addresses:
-        - 192.168.1.1/24
+        - 192.168.3.1/24
 EOF
 sudo netplan apply
 

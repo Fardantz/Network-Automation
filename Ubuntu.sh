@@ -61,10 +61,10 @@ subnet 192.168.3.0 netmask 255.255.255.0 {
 }
 
 subnet 192.168.20.0 netmask 255.255.255.0 { 
-range 192.168.20.10 192.168.20.100; 
-option routers 192.168.20.1; 
-option subnet-mask 255.255.255.0; 
-option domain-name-servers 8.8.8.8, 8.8.4.4;
+  range 192.168.20.10 192.168.20.100; 
+  option routers 192.168.20.1; 
+  option subnet-mask 255.255.255.0; 
+  option domain-name-servers 8.8.8.8, 8.8.4.4;
 #  option domain-name "internal.example.org";
   option subnet-mask 255.255.255.0;
   option routers 192.168.20.1;

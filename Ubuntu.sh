@@ -80,5 +80,8 @@ sudo iptables-save | sudo tee /etc/iptables/rules.v4
 
 echo "Konfigurasi DHCP server dan VLAN di Ubuntu Server 20.04 telah selesai."
 
+# Install SSHPASS
+sudo apt install sshpass
+
 # Selesai
 echo "Otomasi selesai. Silakan restart server untuk memastikan semua perubahan diterapkan."

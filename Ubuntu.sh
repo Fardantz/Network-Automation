@@ -35,7 +35,7 @@ network:
       id: 10
       link: eth1
       addresses:
-        - 192.168.20.1/24
+        - 192.168.1.1/24
 EOF
 sudo netplan apply
 
@@ -45,16 +45,9 @@ sudo tee /etc/dhcp/dhcpd.conf << EOF
 default-lease-time 600;
 max-lease-time 7200;
 
-subnet 192.168.20.0 netmask 255.255.255.0 {
-  range 192.168.20.10 192.168.20.100;
-  option routers 192.168.20.1;
-  option subnet-mask 255.255.255.0;
-  option domain-name-servers 8.8.8.8, 8.8.4.4;
-}
-
-subnet 192.168.200.0 netmask 255.255.255.0 {
-  range 192.168.200.10 192.168.200.100;
-  option routers 192.168.200.1;
+subnet 192.168.3.0 netmask 255.255.255.0 {
+  range 192.168.3.10 192.168.3.100;
+  option routers 192.168.3.1;
   option subnet-mask 255.255.255.0;
   option domain-name-servers 8.8.8.8, 8.8.4.4;
 }

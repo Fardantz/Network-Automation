@@ -51,7 +51,13 @@ subnet 192.168.3.0 netmask 255.255.255.0 {
   range 192.168.3.10 192.168.3.100;
   option routers 192.168.3.1;
   option subnet-mask 255.255.255.0;
-  option domain-name-servers 8.8.8.8, 8.8.4.4;
+  option domain-name-servers 8.8.8.8, 8.8.4.4; 
+#  option domain-name "internal.example.org";
+  option subnet-mask 255.255.255.0;
+  option routers 192.168.3.1;
+  option broadcast-address 192.168.3.255;
+  default-lease-time 600;
+  max-lease-time 7200;
 }
 
 subnet 192.168.20.0 netmask 255.255.255.0 { 
@@ -59,6 +65,12 @@ range 192.168.20.10 192.168.20.100;
 option routers 192.168.20.1; 
 option subnet-mask 255.255.255.0; 
 option domain-name-servers 8.8.8.8, 8.8.4.4;
+#  option domain-name "internal.example.org";
+  option subnet-mask 255.255.255.0;
+  option routers 192.168.20.1;
+  option broadcast-address 192.168.20.255;
+  default-lease-time 600;
+  max-lease-time 7200;
 }
 EOF
 
